@@ -1,0 +1,11 @@
+{
+  "name": "scroll-binder",
+  "version": "0.0.1",
+  "main": "scroll-binder.js",
+  "ignore": [
+    "test"
+  ],
+  "dependencies": {
+    "jquery": "*"
+  }
+}
