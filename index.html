@@ -12,8 +12,8 @@
     html, body {
       background-color: #f9705a;
       position: relative;
-      height: 250%;
-      min-height: 250%;
+      height: 1200px;
+      min-height: 1200px;
     }
 
     a {
@@ -54,6 +54,7 @@
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
+      opacity: .65;
     }
 
     #scroll svg {
@@ -96,6 +97,10 @@
   </script>
   <script type="text/javascript" src="scroll-binder.js"></script>
   <script type="text/javascript">
+    setTimeout(function () {
+      window.scrollTo(0, 0);
+    }, 1);
+
     exports.init($(document.body), {
       over: 400,
       animations: {
