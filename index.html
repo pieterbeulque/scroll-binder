@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #f9705a;
+      position: relative;
+      height: 250%;
+      min-height: 250%;
+    }
+
+    #demo {
+      border: 0 solid #f36355;
+      background-color: #fff;
+      height: 400px;
+      width: 400px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+  <div id="demo"></div>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    exports = {};
+  </script>
+  <script type="text/javascript" src="scroll-binder.js"></script>
+  <script type="text/javascript">
+    exports.init($(document.body), {
+      over: 400,
+      animations: {
+        '#demo': {
+          'border-radius': { to: 400 },
+          'border-width':  { to: 100 },
+          'translateX':    { from: -50, to: -50, unit: '%' },
+          'translateY':    { from: -50, to: -50, unit: '%' },
+          'rotate':        { from: 0, to: 90, unit: 'deg' }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
