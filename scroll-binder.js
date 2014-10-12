@@ -237,7 +237,6 @@
           // If one of the properties was a transform,
           // build a transform string like
           // scale(2.3) translateX(20px)
-          console.log(transformStack);
           if (!$.isEmptyObject(transformStack)) {
             var transformString = '';
 
