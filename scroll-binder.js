@@ -156,11 +156,19 @@
     // Inherit 'from'-value from the CSS if undefined
     if (typeof from === 'undefined') {
       from = parseFloat($element.css(property));
+
+      if (isNaN(from)) {
+        from = 0;
+      }
     }
 
     // Inherit 'to'-value from the CSS if undefined
     if (typeof to === 'undefined') {
       to = parseFloat($element.css(property));
+
+      if (isNaN(to)) {
+        to = 0;
+      }
     }
 
     // Construct the animation function for this property and attach it to the initialized object
