@@ -1,8 +1,8 @@
 # Scroll Binder
 
-Scroll Binder is a simple module that binds CSS values to scroll position.
+Scroll Binder is a simple module that binds CSS values to scroll position. [Find a demo here](//pieterbeulque.github.io/scroll-binder).
 
-*Crafted with love by @pieterbeulque at @mrhenry*
+*Crafted with love by [@pieterbeulque](//github.com/pieterbeulque) at [@mrhenry](//github.com/mrhenry)*
 
 ## Features
 
@@ -52,5 +52,5 @@ Options has a property `over`, being an integer of the scrolling distance and a 
 
 ### Dependencies
 
-For now, dependent on any jQuery version (using `$()`, `$().find()`, `$.inArray` and `$().css()`).
+For now, dependent on any recent jQuery version (using `$()`, `$().find()`, `$.inArray`, `$.proxy` and `$().css()`).
 
