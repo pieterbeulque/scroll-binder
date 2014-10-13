@@ -51,13 +51,13 @@
      * Total scrolling distance / duration of the animation
      * @type {int}
      */
-    this.scrollDistance = options.over || 70;
+    this.scrollDistance = parseInt(options.over, 10) || 70;
 
     /**
      * Scrolling distance to wait before starting the animation
      * @type {[type]}
      */
-    this.scrollDelay = options.delay || 0;
+    this.scrollDelay = parseInt(options.delay, 10) || 0;
 
     /**
      * Animation definitions. Key: selector, value: object with css properties and from/to values
