@@ -54,6 +54,12 @@
     this.scrollDistance = options.over || 70;
 
     /**
+     * Scrolling distance to wait before starting the animation
+     * @type {[type]}
+     */
+    this.scrollDelay = options.delay || 0;
+
+    /**
      * Animation definitions. Key: selector, value: object with css properties and from/to values
      * @type {Object}
      */
@@ -152,6 +158,7 @@
         from         = value.from,
         to           = value.to,
         over         = value.over || this.scrollDistance,
+        delay        = value.delay || this.scrollDelay,
         unit         = (typeof value.unit === 'string') ? value.unit : ((!!isTransform) ? '' : 'px');
 
     defaultValue = isNaN(defaultValue) ? 0 : defaultValue;
@@ -161,7 +168,7 @@
 
     // Construct the animation function for this property and attach it to the initialized object
     return {
-      fn: this.buildPropertyFunction(from, to, over),
+      fn: this.buildPropertyFunction(from, to, over, delay),
       isTransform: isTransform,
       unit: unit
     };
@@ -174,11 +181,17 @@
    * @param  {int} from    Default property value (scrollPos = 0)
    * @param  {int} to      Maximum property value (scrollPos = max)
    * @param  {int} over    Maximum scrolling distance
+   * @param  {int} delay   Scrolling distance to wait before scrolling
    * @return {Function}    Funtion that takes current scroll position as an argument and returns the property value
    */
-  ScrollBinder.prototype.buildPropertyFunction = function(from, to, over) {
+  ScrollBinder.prototype.buildPropertyFunction = function(from, to, over, delay) {
     return function (scrollPos) {
-      var newValue = Math.round((from + (to - from) * scrollPos / over) * 100 ) / 100;
+      var newValue;
+
+      scrollPos -= delay;
+      scrollPos = (scrollPos < 0) ? 0 : scrollPos;
+
+      newValue = Math.round((from + (to - from) * scrollPos / over) * 100 ) / 100;
 
       // Force newValue between from and to (if check is for negative numbers (like between -55 and -10))
       if (from < to) {
