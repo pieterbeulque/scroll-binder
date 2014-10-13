@@ -147,34 +147,22 @@
   };
 
   ScrollBinder.prototype.initProperty = function (property, value, $element) {
-    var isTransform = ($.inArray(property, this.transforms) !== -1),
-        from        = value.from,
-        to          = value.to,
-        over        = value.over || this.scrollDistance,
-        unit        = (typeof value.unit === 'string') ? value.unit : ((!!isTransform) ? '' : 'px');
+    var isTransform  = ($.inArray(property, this.transforms) !== -1),
+        defaultValue = parseFloat($element.css(property)),
+        from         = value.from,
+        to           = value.to,
+        over         = value.over || this.scrollDistance,
+        unit         = (typeof value.unit === 'string') ? value.unit : ((!!isTransform) ? '' : 'px');
 
-    // Inherit 'from'-value from the CSS if undefined
-    if (typeof from === 'undefined') {
-      from = parseFloat($element.css(property));
+    defaultValue = isNaN(defaultValue) ? 0 : defaultValue;
 
-      if (isNaN(from)) {
-        from = 0;
-      }
-    }
-
-    // Inherit 'to'-value from the CSS if undefined
-    if (typeof to === 'undefined') {
-      to = parseFloat($element.css(property));
-
-      if (isNaN(to)) {
-        to = 0;
-      }
-    }
+    from = (typeof from === 'undefined') ? defaultValue : from;
+    to   = (typeof to === 'undefined') ? defaultValue : to;
 
     // Construct the animation function for this property and attach it to the initialized object
     return {
       fn: this.buildPropertyFunction(from, to, over),
-      isTransform: ($.inArray(property, this.transforms) !== -1),
+      isTransform: isTransform,
       unit: unit
     };
   };
