@@ -1,7 +1,7 @@
 {
   "name": "scroll-binder",
   "main": "scroll-binder.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/pieterbeulque/scroll-binder",
   "authors": [
     "Pieter Beulque <pieter@mrhenry.be>"
