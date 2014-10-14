@@ -31,12 +31,9 @@
 <body>
   <div id="demo"></div>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script type="text/javascript">
-    exports = {};
-  </script>
   <script type="text/javascript" src="scroll-binder.js"></script>
   <script type="text/javascript">
-    exports.init($(document.body), {
+    new ScrollBinder($(document.body), {
       over: 400,
       animations: {
         '#demo': {

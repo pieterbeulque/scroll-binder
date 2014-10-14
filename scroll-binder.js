@@ -1,36 +1,5 @@
-(function ($, exports, window, document) {
+(function ($, window, document) {
   'use strict';
-
-  var module;
-
-  // This will be a singleton, so module manages the instance
-  module = {
-    instance: null,
-    key: 'SCROLL_BINDER'
-  };
-
-  /**
-   * Get singleton instance or create it if non-existent
-   */
-  exports.init = function ($element, options) {
-    if (module.instance === null) {
-      module.instance = new ScrollBinder($element, options);
-    }
-
-    return module.instance;
-  };
-
-  /**
-   * Destroy ScrollBinder singleton
-   */
-  exports.destroy = function () {
-    if (module.instance === null) {
-      return;
-    }
-
-    module.instance.unbind().reset();
-    module.instance = null;
-  };
 
   /**
    * A nice header that collapses when scrolling down the page
@@ -90,7 +59,7 @@
    * @return {ScrollBinder} Instance for chainability
    */
   ScrollBinder.prototype.bind = function () {
-    $(window).on('scroll.' + module.instanceKey, $.proxy(this.onScroll, this));
+    $(window).on('scroll.SCROLL_BINDER', $.proxy(this.onScroll, this));
     return this;
   };
 
@@ -132,7 +101,7 @@
    * @return {ScrollBinder} Instance for chainability
    */
   ScrollBinder.prototype.unbind = function () {
-    $(window).off('scroll.' + module.instanceKey);
+    $(window).off('scroll.SCROLL_BINDER');
     return this;
   };
 
@@ -327,4 +296,6 @@
     }
   };
 
-}(jQuery, exports, window, document, undefined));
+  window.ScrollBinder = ScrollBinder;
+
+}(jQuery, window, document, undefined));
