@@ -81,6 +81,7 @@
    */
   ScrollBinder.prototype.init = function () {
     this.initAnimations();
+    this.animate($(window).scrollTop());
     return this;
   };
 
@@ -297,8 +298,7 @@
    * @return {void}
    */
   ScrollBinder.prototype.onScroll = function (e, fromScrollEnd) {
-    var self = this,
-        scrollTop = $(window).scrollTop();
+    var self = this;
 
     // scrollFlag throttles the requests
     if (this.scrollFlag === false) {
@@ -313,7 +313,7 @@
     this.scrollFlag = false;
 
     // Animate all properties
-    this.animate(scrollTop);
+    this.animate($(window).scrollTop());
 
     // Once per 16ms (= 1 frame at 60fps)
     setTimeout(function () {
