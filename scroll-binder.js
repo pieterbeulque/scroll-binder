@@ -51,7 +51,13 @@
      * Total scrolling distance / duration of the animation
      * @type {int}
      */
-    this.scrollDistance = options.over || 70;
+    this.scrollDistance = parseInt(options.over, 10) || 70;
+
+    /**
+     * Scrolling distance to wait before starting the animation
+     * @type {[type]}
+     */
+    this.scrollDelay = parseInt(options.delay, 10) || 0;
 
     /**
      * Animation definitions. Key: selector, value: object with css properties and from/to values
@@ -147,26 +153,23 @@
   };
 
   ScrollBinder.prototype.initProperty = function (property, value, $element) {
-    var isTransform = ($.inArray(property, this.transforms) !== -1),
-        from        = value.from,
-        to          = value.to,
-        over        = value.over || this.scrollDistance,
-        unit        = (typeof value.unit === 'string') ? value.unit : ((!!isTransform) ? '' : 'px');
+    var isTransform  = ($.inArray(property, this.transforms) !== -1),
+        defaultValue = parseFloat($element.css(property)),
+        from         = value.from,
+        to           = value.to,
+        over         = value.over || this.scrollDistance,
+        delay        = value.delay || this.scrollDelay,
+        unit         = (typeof value.unit === 'string') ? value.unit : ((!!isTransform) ? '' : 'px');
 
-    // Inherit 'from'-value from the CSS if undefined
-    if (typeof from === 'undefined') {
-      from = parseFloat($element.css(property));
-    }
+    defaultValue = isNaN(defaultValue) ? 0 : defaultValue;
 
-    // Inherit 'to'-value from the CSS if undefined
-    if (typeof to === 'undefined') {
-      to = parseFloat($element.css(property));
-    }
+    from = (typeof from === 'undefined') ? defaultValue : from;
+    to   = (typeof to === 'undefined') ? defaultValue : to;
 
     // Construct the animation function for this property and attach it to the initialized object
     return {
-      fn: this.buildPropertyFunction(from, to, over),
-      isTransform: ($.inArray(property, this.transforms) !== -1),
+      fn: this.buildPropertyFunction(from, to, over, delay),
+      isTransform: isTransform,
       unit: unit
     };
   };
@@ -178,11 +181,17 @@
    * @param  {int} from    Default property value (scrollPos = 0)
    * @param  {int} to      Maximum property value (scrollPos = max)
    * @param  {int} over    Maximum scrolling distance
+   * @param  {int} delay   Scrolling distance to wait before scrolling
    * @return {Function}    Funtion that takes current scroll position as an argument and returns the property value
    */
-  ScrollBinder.prototype.buildPropertyFunction = function(from, to, over) {
+  ScrollBinder.prototype.buildPropertyFunction = function(from, to, over, delay) {
     return function (scrollPos) {
-      var newValue = Math.round((from + (to - from) * scrollPos / over) * 100 ) / 100;
+      var newValue;
+
+      scrollPos -= delay;
+      scrollPos = (scrollPos < 0) ? 0 : scrollPos;
+
+      newValue = Math.round((from + (to - from) * scrollPos / over) * 100 ) / 100;
 
       // Force newValue between from and to (if check is for negative numbers (like between -55 and -10))
       if (from < to) {
@@ -237,7 +246,6 @@
           // If one of the properties was a transform,
           // build a transform string like
           // scale(2.3) translateX(20px)
-          console.log(transformStack);
           if (!$.isEmptyObject(transformStack)) {
             var transformString = '';
 
