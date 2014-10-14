@@ -1,11 +1,26 @@
 {
   "name": "scroll-binder",
-  "version": "0.0.1",
   "main": "scroll-binder.js",
-  "ignore": [
-    "test"
+  "version": "0.0.1",
+  "homepage": "https://github.com/pieterbeulque/scroll-binder",
+  "authors": [
+    "Pieter Beulque <pieter@mrhenry.be>"
+  ],
+  "description": "A simple module that binds CSS values to scroll position",
+  "keywords": [
+    "scroll",
+    "animate",
+    "css"
   ],
   "dependencies": {
     "jquery": "*"
-  }
+  },
+  "license": "GPL",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
