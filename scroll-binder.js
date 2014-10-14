@@ -28,7 +28,7 @@
       return;
     }
 
-    module.instance.reset().unbind();
+    module.instance.unbind().reset();
     module.instance = null;
   };
 
@@ -98,6 +98,31 @@
    * @return {ScrollBinder} Instance for chainability
    */
   ScrollBinder.prototype.reset = function () {
+    var self = this;
+
+    clearTimeout(this.scrollEnd);
+
+    this.requestFrame.call(window, function () {
+      for (var selector in self.animations) {
+        if (self.animations.hasOwnProperty(selector)) {
+          var $element = self.animations[selector].$element,
+              properties = self.animations[selector].properties;
+
+          for (var property in properties) {
+            if (properties.hasOwnProperty(property)) {
+              $element.css(property, '');
+            }
+          }
+
+          $element.css({
+            '-webkit-transform': '',
+            '-ms-transform'    : '',
+            'transform'        : ''
+          });
+        }
+      }
+    });
+
     return this;
   };
 
